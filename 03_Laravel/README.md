@@ -1,6 +1,6 @@
-# `Laravel`的教學
-
 [回上層目錄](../README.md)
+
+# `Laravel`的教學
 
 ## 目錄
 01. 基本

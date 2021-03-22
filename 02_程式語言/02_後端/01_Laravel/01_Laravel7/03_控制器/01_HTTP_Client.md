@@ -1,6 +1,6 @@
 [回上層目錄](../README.md)
 
-# HTTP Client
+# Laravel 控制 HTTP_Client
 
 ## **敘述**
 這是用來處理後端訪問其他站點的功能也可以訪問API，前身是guzzlehttp/guzzle第三方套件在某個版本laravel把它涵蓋進標準裡面了。
@@ -8,7 +8,7 @@
 ## **教學&範例**
 ### 安裝guzzlehttp/guzzle
 如果你的laravel版本沒有內建HTTP你可以自行安裝。
-```cmd
+```bash
 composer require guzzlehttp/guzzle
 ```
 

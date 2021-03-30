@@ -2,10 +2,10 @@
 
 # Redis
 
-## **敘述**
+## **Description [描述]**
 Laravel預設沒有安裝redis套件，需要使用視需要自行額外再安裝的，這間會列出如何安裝設定跟基本使用方式。
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 安裝
 ```bash
 composer require predis/predis
@@ -231,8 +231,8 @@ Redis::hgetall('hash1'); // 返回 array('key1'=>'v1','key2'=>'v2','key3'=>'v3',
 }
 ```
 
-## **參考文章**
+## **Reference article [參考文章]**
 [參考文件](網址)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

@@ -2,10 +2,10 @@
 
 # # Bootstrap(樣式)
 
-## **敘述**
+## **Description [描述]**
 Bootstrap是一種前端樣式樣板。
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 安裝
 ```
 npm install -save bootstrap jquery popper.js
@@ -44,8 +44,8 @@ export default {
 </script>
 ```
 
-## **參考文章**
+## **Reference article [參考文章]**
 [參考文件](網址)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

@@ -2,10 +2,10 @@
 
 # Vuex(store)
 
-## **敘述**
+## **Description [描述]**
 Vuex是一種狀態管理的應用，在很多時候需要互相溝通確定狀態的時候非常好用。
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 建構新vuex
 ```js
 export default {
@@ -208,8 +208,8 @@ api.js整合中使用範例
 >   }
 > ```
 
-## **參考文章**
+## **Reference article [參考文章]**
 [參考文件](https://vuex.vuejs.org/zh/)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

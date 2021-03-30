@@ -2,10 +2,10 @@
 
 # Laravel 控制 HTTP_Client
 
-## **敘述**
+## **Description [描述]**
 這是用來處理後端訪問其他站點的功能也可以訪問API，前身是guzzlehttp/guzzle第三方套件在某個版本laravel把它涵蓋進標準裡面了。
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 安裝guzzlehttp/guzzle
 如果你的laravel版本沒有內建HTTP你可以自行安裝。
 ```bash
@@ -187,8 +187,8 @@ public function demoPOST()
 }
 ```
 
-## **參考文章**
+## **Reference article [參考文章]**
 [Laravel官方教學](https://laravel.com/docs/8.x/http-client)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

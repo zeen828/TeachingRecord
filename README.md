@@ -1,8 +1,8 @@
 [目錄](README.md)
 
-# 教學紀錄
+# Teaching record [教學紀錄]
 
-## **目錄**
+## **Menu [目錄]**
 + [01_系統](01_系統/README.md)
     + [01_CentOS](01_系統/01_CentOS/README.md)
 + [02_程式語言](02_程式語言/README.md)
@@ -27,12 +27,12 @@
     + [04_Docker](03_開發工具/04_Docker/README.md)
     + [05_Git](03_開發工具/05_Git/README.md)
 
-## **敘述**
+## **Description [描述]**
 在這邊記錄一些時工作時遇到的問題，
 
 準備拿來當教學題材的資料，
 
 涵蓋的領域會有服務器程式語言等等。
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

@@ -2,7 +2,7 @@
 
 # `程式語言`的教學
 
-## **目錄**
+## **Menu [目錄]**
 + 02_程式語言
     + [01_前端](01_前端/README.md)
         + [01_Vue.JS](01_前端/01_VueJS/README.md)
@@ -19,7 +19,7 @@
         + [02_Node.js](02_後端/02_NodeJS/README.md)
         + [03_Golan](02_後端/03_Golan/README.md)
 
-## **敘述**
+## **Description [描述]**
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

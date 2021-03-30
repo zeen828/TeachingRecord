@@ -2,10 +2,10 @@
 
 # Tables
 
-## **敘述**
+## **Description [描述]**
 屁話一段
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 欄位寬度設定
 ```html
 <table class="table">
@@ -28,8 +28,8 @@
 </table>
 ```
 
-## **參考文章**
+## **Reference article [參考文章]**
 [參考文件](網址)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

@@ -2,10 +2,10 @@
 
 # 路由
 
-## **敘述**
+## **Description [描述]**
 透過路由控制所有的路徑訪問頁面。
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 路由設定
 ```js
 import Vue from 'vue'
@@ -84,8 +84,8 @@ export default {
 }
 ```
 
-## **參考文章**
+## **Reference article [參考文章]**
 [參考文件](網址)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

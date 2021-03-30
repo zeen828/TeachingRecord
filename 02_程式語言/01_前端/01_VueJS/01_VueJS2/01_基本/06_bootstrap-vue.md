@@ -2,10 +2,10 @@
 
 # Bootstrap-vue(樣式)
 
-## **敘述**
+## **Description [描述]**
 Bootstrap-vue和Bootstrap不一樣，Bootstrap-vue是一個專門為Vue開發的UI套件，與原生的Bootstrap並不完全一樣。
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 安裝
 ```
 npm install bootstrap-vue bootstrap --save
@@ -37,8 +37,8 @@ new Vue({
 ```
 main.js
 
-## **參考文章**
+## **Reference article [參考文章]**
 [參考文件](https://bootstrap-vue.org/docs/)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

@@ -2,11 +2,11 @@
 
 # `系統`的教學
 
-## **目錄**
+## **Menu [目錄]**
 + 01_系統
     + [01_CentOS](01_CentOS/README.md)
 
-## **敘述**
+## **Description [描述]**
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

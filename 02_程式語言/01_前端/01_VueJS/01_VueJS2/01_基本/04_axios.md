@@ -2,10 +2,10 @@
 
 # axios
 
-## **敘述**
+## **Description [描述]**
 用過JQuery的人相信都寫過AJAX，axios是Vue.js用來處理call api用的方法。
 
-## **教學&範例**
+## **Teaching & Examples [教學&範例]**
 ### 安裝
 ```
 npm install --save axios
@@ -108,8 +108,8 @@ export default {
 ```
 App.vue中使用範例
 
-## **參考文章**
+## **Reference article [參考文章]**
 [參考文件](https://developer.aliyun.com/mirror/npm/package/vue-axios)
 
-## **作者**
+## **Author [作者]**
 `Mr. Will`

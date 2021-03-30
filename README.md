@@ -24,6 +24,8 @@
     + [01_Postman](03_開發工具/01_Postman/README.md)
     + [02_Cmposer](03_開發工具/02_Cmposer/README.md)
     + [03_Docker](03_開發工具/03_Docker/README.md)
+    + [04_Docker](03_開發工具/04_Docker/README.md)
+    + [05_Git](03_開發工具/05_Git/README.md)
 
 ## **敘述**
 在這邊記錄一些時工作時遇到的問題，

@@ -100,7 +100,17 @@ export default new Vuex.Store({
 export default {
   name: 'App',
   computed: {
-    userDebug: {
+    rootDebug: {
+      get () {
+        // 取modules的值
+        return this.$store.getters.getDebug
+      },
+      set (val) {
+        // 執行mutations
+        this.$store.commit('setDebug', val)
+      }
+    },
+    mosuleDebug: {
       get () {
         // 取modules的值
         return this.$store.getters['module/getDebug']
@@ -114,7 +124,9 @@ export default {
   mounted () {
     // 取根的值
     this.$store.getters.getDebug
+    this.$store.getters['module/getDebug']
     // 執行actions
+    this.$store.dispatch('ready'),
     this.$store.dispatch('module/ready'),
   }
 }

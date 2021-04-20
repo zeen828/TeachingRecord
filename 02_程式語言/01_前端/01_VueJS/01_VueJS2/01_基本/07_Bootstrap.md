@@ -1,6 +1,6 @@
 [回上層目錄](../README.md)
 
-# # Bootstrap(樣式)
+# Bootstrap(樣式)
 
 ## **Description [描述]**
 Bootstrap是一種前端樣式樣板。

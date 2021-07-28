@@ -3,8 +3,14 @@
 # Teaching record [教學紀錄]
 
 ## **Menu [目錄]**
++ [00_雲端服務器](00_雲端服務器/README.md)
+    + [01_GCP](00_雲端服務器/01_GCP/README.md)
+    + [02_AWS](00_雲端服務器/02_AWS/README.md)
 + [01_系統](01_系統/README.md)
-    + [01_CentOS](01_系統/01_CentOS/README.md)
+    + [01_Windows](01_系統/01_Windows/README.md)
+    + [02_Mac](01_系統/02_Mac/README.md)
+    + [03_CentOS](01_系統/03_CentOS/README.md)
+    + [04_Ubuntu](01_系統/04_Ubuntu/README.md)
 + [02_程式語言](02_程式語言/README.md)
     + [01_前端](02_程式語言/01_前端/README.md)
         + [01_Vue.JS](02_程式語言/01_前端/01_VueJS/README.md)
@@ -25,6 +31,7 @@
     + [02_Cmposer](03_開發工具/02_Cmposer/README.md)
     + [03_Docker](03_開發工具/03_Docker/README.md)
     + [04_Docker](03_開發工具/04_Docker/README.md)
+        + [05_laradock](03_開發工具/04_Docker/05_laradock/README.md)
     + [05_Git](03_開發工具/05_Git/README.md)
 
 ## **Description [描述]**

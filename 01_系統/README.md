@@ -10,7 +10,7 @@
     + [04_Ubuntu](04_Ubuntu/README.md)
 
 ## **Description [描述]**
-一些作業系統的操作記錄
+
 
 ## **Author [作者]**
 `Mr. Will`

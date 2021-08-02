@@ -1,18 +1,14 @@
 [回上層目錄](../README.md)
 
-# 教學用 > 服務器
+# `雲端服務器`的教學
 
 ## **Menu [目錄]**
-看需要決定
++ 01_系統
+    + [01_GCP](01_GCP/README.md)
+    + [02_AWS](02_AWS/README.md)
 
 ## **Description [描述]**
-屁話一段
 
-## **Teaching & Examples [教學&範例]**
-實作範例期望每個人照步驟都可以有一個成功範例
-
-## **Reference article [參考文章]**
-[參考文件](網址)
 
 ## **Author [作者]**
 `Mr. Will`

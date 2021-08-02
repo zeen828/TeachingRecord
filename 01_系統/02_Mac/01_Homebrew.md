@@ -7,7 +7,7 @@ Mac下的套件的管理工具，可以幫忙快速安裝套件。
 
 ## **Teaching & Examples [教學&範例]**
 ### 安裝
-```base
+```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # 輸入密碼
 # 按Enert

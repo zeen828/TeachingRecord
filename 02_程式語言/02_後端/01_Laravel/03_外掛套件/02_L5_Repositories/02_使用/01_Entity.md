@@ -74,6 +74,32 @@ class Entity extends Model implements Transformable
 }
 ```
 
+### 將Model改成擁有授權認證的版本
+```php
+namespace App\Entities\Users;
+
+// use Illuminate\Database\Eloquent\Model;
+
+// 略...
+
+// Auth
+use Illuminate\Foundation\Auth\User as Authenticatable;
+// JWT(如果使用tymon/jwt-auth)
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+/**
+ * Class User.
+ *
+ * @package namespace App\Entities\Users;
+ */
+// class User extends Model implements Transformable, JWTSubject
+// 改成下面
+class User extends Authenticatable implements Transformable, JWTSubject
+{
+    // 略...
+}
+```
+
 ### 額外可配置欄位
 ```php
 namespace App\Entities\Folder;

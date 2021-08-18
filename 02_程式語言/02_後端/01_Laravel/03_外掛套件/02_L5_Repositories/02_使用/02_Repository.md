@@ -3,7 +3,7 @@
 # 程式語言 / 後端 / Laravel / 外掛套件 / L5 Repositories / 使用 / `Repository`的教學
 
 ## **Description [描述]**
-Repository主要是用來處理查詢的，我們將Entity保持乾淨狀態只有結構跟關係，其他的查詢或自訂透過這裡來處理，可以搭配Criteria一起使用。
+Repository - 主要是用來處理查詢的，我們將Entity保持乾淨狀態只有結構跟關係，其他的查詢或自訂透過這裡來處理，可以搭配Criteria一起使用。
 
 ## **Teaching & Examples [教學&範例]**
 

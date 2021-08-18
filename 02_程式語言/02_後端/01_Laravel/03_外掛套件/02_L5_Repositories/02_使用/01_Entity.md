@@ -3,7 +3,7 @@
 # 程式語言 / 後端 / Laravel / 外掛套件 / L5 Repositories / 使用 / `Entity`的教學
 
 ## **Description [描述]**
-Entity是L5 Repositories為了避免與Model干擾，所以才將Model定義成Entity避免混淆，在Entity裡面建議只設定結構跟關聯，查詢處理分面則交給Repository來。
+Entity - 是L5 Repositories為了避免與Model干擾，所以才將Model定義成Entity避免混淆，在Entity裡面建議只設定結構跟關聯，查詢處理方面則交給Repository來。
 
 ## **Teaching & Examples [教學&範例]**
 

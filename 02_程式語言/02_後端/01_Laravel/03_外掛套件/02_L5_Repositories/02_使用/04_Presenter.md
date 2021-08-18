@@ -2,9 +2,6 @@
 
 # 程式語言 / 後端 / Laravel / 外掛套件 / L5 Repositories / 使用 / `Presenter`的教學
 
-## **Menu [目錄]**
-看需要決定
-
 ## **Description [描述]**
 Presenter - 呈現器,常用於前端模板格式化輸出
 

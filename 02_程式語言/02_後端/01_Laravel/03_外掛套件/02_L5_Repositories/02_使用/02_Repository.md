@@ -17,6 +17,16 @@ php artisan make:repository "Folder/Repository"
 # app/Repositories/Folder/RepositoryRepository.php
 # app/Repositories/Folder/RepositoryRepositoryEloquent.php
 # database/migrations/2021_08_03_174908_create_folder/_repositories_table.php
+
+# 需要手動註冊app/Providers/RepositoryServiceProvider.php
+```
+
+### 註冊綁定Repository
+```php
+php artisan make:bindings Demo
+
+# 註冊app/Providers/RepositoryServiceProvider.php
+        $this->app->bind(\App\Repositories\DemoRepository::class, \App\Repositories\DemoRepositoryEloquent::class);
 ```
 
 ### 基礎
@@ -98,6 +108,19 @@ class RepositoryRepositoryEloquent extends BaseRepository implements RepositoryR
 ### 引用一個Repository
 ```php
 $repository = app('App\Repositories\Folder\RepositoryRepository');
+
+use App\Repositories\Folder\RepositoryRepository;
+$this->repository = app()->make(RepositoryRepository::class);
+```
+
+### BUG處理
+```php
+// find查無資料會被引導去錯誤頁面
+try {
+    $user = $this->model->find($id);
+} catch (\Exception $e) {
+    //
+}
 ```
 
 ## **Reference article [參考文章]**

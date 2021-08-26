@@ -45,6 +45,64 @@ php artisan make:entity "Folder/Entity"
 # database/migrations/2021_08_03_174643_create_folder/_entities_table.php
 ```
 
+### 常用函式
+```php
+Prettus\Repository\Contracts\RepositoryInterface
+    all($columns = array('*'))
+    first($columns = array('*'))
+    paginate($limit = null, $columns = ['*'])
+    find($id, $columns = ['*'])
+    findByField($field, $value, $columns = ['*'])
+    findWhere(array $where, $columns = ['*'])
+    findWhereIn($field, array $where, $columns = [*])
+    findWhereNotIn($field, array $where, $columns = [*])
+    create(array $attributes)
+    update(array $attributes, $id)
+    updateOrCreate(array $attributes, array $values = [])
+    delete($id)
+    deleteWhere(array $where)
+    orderBy($column, $direction = 'asc');
+    with(array $relations);
+    has(string $relation);
+    whereHas(string $relation, closure $closure);
+    hidden(array $fields);
+    visible(array $fields);
+    scopeQuery(Closure $scope);
+    getFieldsSearchable();
+    setPresenter($presenter);
+    skipPresenter($status = true);
+```
+
+```php
+Prettus\Repository\Contracts\CacheableInterface
+    setCacheRepository(CacheRepository $repository)
+    getCacheRepository()
+    getCacheKey($method, $args = null)
+    getCacheMinutes()
+    skipCache($status = true)
+```
+
+```php
+Prettus\Repository\Contracts\PresenterInterface
+    present($data);
+```
+
+```php
+Prettus\Repository\Contracts\Presentable
+    setPresenter(PresenterInterface $presenter);
+    presenter();
+```
+
+```php
+Prettus\Repository\Contracts\CriteriaInterface
+    apply($model, RepositoryInterface $repository);
+```
+
+```php
+Prettus\Repository\Contracts\Transformable
+    transform();
+```
+
 ### 基礎
 ```php
 <?php

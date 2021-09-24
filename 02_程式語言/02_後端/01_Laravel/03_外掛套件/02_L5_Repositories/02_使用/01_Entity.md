@@ -71,6 +71,16 @@ Prettus\Repository\Contracts\RepositoryInterface
     getFieldsSearchable();
     setPresenter($presenter);
     skipPresenter($status = true);
+
+public function all($columns = ['*']);    //获取所有记录
+public function paginate($perPage = 15, $columns = ['*']);    //分页，默认每页15条
+public function create(array $data);    //创建一条记录
+public function save(array $data);    //保存
+public function delete($id);    //删除一条记录
+public function update(array $data, $id);    //更新记录
+public function find($id, $columns = ['*']);    //按id查找
+public function findBy($field, $value, $columns = ['*']);    //按指定字段查找
+public function findWhere($where, $columns = ['*']);    //按多个条件查找
 ```
 
 ```php

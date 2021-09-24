@@ -52,6 +52,53 @@ class TransformerTransformer extends TransformerAbstract
 }
 ```
 
+### 關聯的處理
+```php
+<?php
+
+namespace App\Transformers\Folder;
+
+use League\Fractal\TransformerAbstract;
+use App\Entities\Folder\Transformer;
+// Transformer
+use App\Transformers\Users\UserTransformer;
+use App\Transformers\Users\UserListTransformer;
+
+class TransformerTransformer extends TransformerAbstract
+{
+    protected $defaultIncludes = ['user'];// 預設顯示該關聯結構
+    protected $availableIncludes = ['user', 'friend'];// 可以引用的關聯結構(http://127.0.0.1/demo?include=friend)
+
+    public function transform(Transformer $model)
+    {
+        return [
+            'id'         => (int) $model->id,
+
+            'user' => [],
+            'friend' => [],
+            /* place your other model properties here */
+
+            'created_at' => $model->created_at,
+            'updated_at' => $model->updated_at
+        ];
+    }
+
+    // 關聯
+    public function includeUser(Item $model)
+    {
+        // 單筆
+        return $this->item($model->rUser, new UserTransformer());
+    }
+
+    // 關聯
+    public function includeFriend(Item $model)
+    {
+        // 集合
+        return $this->collection($model->rFriend, new UserListTransformer());
+    }
+}
+```
+
 ## **Reference article [參考文章]**
 [參考文件](https://segmentfault.com/a/1190000021698434)
 

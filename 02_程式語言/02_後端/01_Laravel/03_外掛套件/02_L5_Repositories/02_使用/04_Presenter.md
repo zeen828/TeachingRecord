@@ -83,6 +83,50 @@ class PresenterTransformer extends TransformerAbstract
 }
 ```
 
+### 去除單筆回傳格式多個data，對集合無效，自訂一個規則改寫集合體
+```php
+# config/repository.php
+    /*
+    |--------------------------------------------------------------------------
+    | Fractal Presenter Config
+    |--------------------------------------------------------------------------
+    |
+
+    Available serializers:
+    ArraySerializer
+    DataArraySerializer
+    JsonApiSerializer
+
+    */
+    'fractal'    => [
+        'params'     => [
+            'include' => 'include'
+        ],
+        // 'serializer' => League\Fractal\Serializer\DataArraySerializer::class
+        // 'serializer' => League\Fractal\Serializer\ArraySerializer::class
+        'serializer' => App\Serializers\SimpleArraySerializer::class
+    ],
+```
+
+```php
+<?php
+
+namespace App\Serializers;
+
+use League\Fractal\Serializer\ArraySerializer;
+
+/**
+ * 自訂改寫集合體回傳不要有'data'
+ */
+class SimpleArraySerializer extends ArraySerializer
+{
+    public function collection($resourceKey, array $data)
+    {
+        return $data;
+    }
+}
+```
+
 ### Controller使用
 ```php
 $this->repository->setPresenter("App\Presenters\Folder\PresenterPresenter");
@@ -137,7 +181,7 @@ $this->repository->setPresenter("App\Presenters\Folder\PresenterPresenter");
 ```
 
 ## **Reference article [參考文章]**
-[參考文件](網址)
+[參考文件](https://github.com/joaosalless/laravel-codedelivery/tree/master/app/Transformers)
 
 ## **Author [作者]**
 `Mr. Will`

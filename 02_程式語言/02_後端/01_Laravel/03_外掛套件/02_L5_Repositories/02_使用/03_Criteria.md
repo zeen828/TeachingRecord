@@ -58,6 +58,9 @@ $datas = $this->repository->all();
 
 $datas = $this->repository->getByCriteria(new Criteria());
 
+# 重置Criteria
+$this->repository->resetCriteria()
+
 # 跳過Criteria不使用
 $posts = $this->repository->skipCriteria()->all();
 

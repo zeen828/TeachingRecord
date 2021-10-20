@@ -175,6 +175,18 @@ print_r( $post->presenter() ); //It produces an output as array
 ```
 
 
+### 將原生modl或去的資料做格式化
+```php
+use App\Entities\Model;
+
+        $modelId = 1;
+        $data = Model::find($modelId);
+
+        $presenter = app('App\Presenters\ModelMiniPresenter');
+        $formatData = $presenter->present($data);
+        print_r($formatData);
+```
+
 ### Controller使用
 ```php
 $this->repository->setPresenter("App\Presenters\Folder\PresenterPresenter");

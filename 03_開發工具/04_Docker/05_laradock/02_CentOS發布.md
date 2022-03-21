@@ -139,6 +139,8 @@ git branch -r
 git checkout v2-new-route
 git checkout origin/feature/v2-new-route
 
+git checkout v2 origin/v2
+
 # 設定api網址
 vi nuxt.config.js
 # baseUrl: process.env.DIUDIU_ENV == 'prod' ? 'https://aeapi.ddiudiu.com/' : 'https://v1api.ddiudiu.com/',
@@ -225,14 +227,14 @@ server {
     location / {
         # 需要指向下面的 @router，否則 Vue 的路由在 Nginx 中刷新會報 404
         try_files $uri $uri/ @router;
-        index index.html index.htm;
+        index index.html;
     }
 
     # 對應上面的 @router
     # 主要原因是路由的路徑資源並不是一個真實的路徑，所以無法找到具體的文件
     # 因此需要 rewrite 到 index.html 中，然後交給路由進行處理
     location @router {
-        index index.html index.htm;
+        rewrite ^.*$ /index.html last;
     }
 
     error_log /var/log/nginx/ae_diudiu_com_error.log;

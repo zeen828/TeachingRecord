@@ -55,7 +55,7 @@ docker-compose version 1.25.3
 # Git安裝
 ```bash
 sudo yum install git
-git –version
+git --version
 ```
 
 # 安裝Laradock
@@ -64,7 +64,7 @@ git –version
 git clone https://github.com/Laradock/laradock.git Laradock
 
 # 複製範本 env-example 檔作為設定檔
-cd ~/Laradock && cp env-example .env
+cd Laradock && cp .env.example .env
 
 # 修改 .env 檔的 APP_CODE_PATH_HOST 參數到指定的映射路徑
 APP_CODE_PATH_HOST=/var/www
@@ -72,11 +72,33 @@ APP_CODE_PATH_HOST=/var/www
 APP_CODE_PATH_HOST:         設定Laravel專案要放在local的哪個path
 APP_CODE_PATH_CONTAINER:    設定專案要同步到container中的哪個path
 DATA_PATH_HOST:             設定db, redis資料要放在哪個path
+# DATA_PATH_HOST=/data/.laradock/data
+
 
 # 使用 docker-compose 啟動 Laradock
 cd ~/Laradock
-docker-compose up -d nginx mysql redis workspace
+sudo systemctl start docker
+docker-compose up -d nginx mysql redis workspace phpmyadmin jenkins
 docker-compose up -d nginx redis workspace
+```
+
+## jenkins
+
+### GCP配置打通port
+開啟防火牆 虛擬私有雲網路 > 防火牆 > 建立防火牆規則(使用8090)
+
+### 啟動安裝配置
+```bash
+# 啟動jenkins
+docker-compose up -d jenkins
+# jenkins 安裝密碼
+cat jenkins/jenkins_home/secrets/initialAdminPassword
+# 在原始設備家目錄
+/data/Laradock/jenkins/jenkins_home/workspace
+```
+
+### docker-compose指令
+```bash
 # 停止容器運作
 docker-compose stop
 # 停止容器運作外加上移除容器
@@ -84,27 +106,172 @@ docker-compose down
 # 重啟Nginx服務
 docker-compose restart nginx
 # 查看Nginx紀錄
-docker-compose logs  nginx
+docker-compose logs nginx
 # 查看Nginx即時紀錄
 docker-compose logs -f nginx
+# 進入jenkins容器
+docker-compose exec jenkins bash
+# 進入workspace容器
+docker-compose exec workspace bash
+# 查容器
+docker-compose ps
+```
 
+### docker指令
+```bash
 # 查容器
 docker ps -a
 docker exec -it <Container ID> bash
-docker exec -it 526858050d53 bash
+docker exec -it 59df4c9852a0 bash
 ```
+
+## jenkins工作配置
+### 建立key
+```bash
+# 進入jenkins容器
+docker-compose exec jenkins bash
+# 切換資料夾
+cd /var/jenkins_home/
+# 建立key
+ssh-keygen -m PEM -t rsa -b 4096
+> /var/jenkins_home/key/gcpTestDockerJenkins
+# 整理key
+mv gcpTestDockerJenkins gcpTestDockerJenkins.pem
+mkdir key
+cd key
+mv ../gcpTestDockerJenkins.p* ./
+# 複製pub公鑰到GCP中繼
+cat gcpTestDockerJenkins.pub
+# 連結服務器
+ssh -i /var/jenkins_home/key/gcpTestDockerJenkins.pem cookietag@dockerhost
+
+ssh-copy-id -i /var/jenkins_home/key/gcpTestDockerJenkins.pub cookietag@dockerhost
+
+ssh-copy-id -i /var/jenkins_home/key/gcpTestDockerJenkins.pub cookietag@35.194.150.130
+ssh-copy-id -i /var/jenkins_home/key/gcpTestDockerJenkins.pub cookietag@35.200.133.189
+
+ssh -i /var/jenkins_home/key/gcpTestDockerJenkins.pub cookietag@35.194.150.130
+ssh -i /var/jenkins_home/key/gcpTestDockerJenkins.pub cookietag@35.200.133.189
+
+```
+
+### 增加host配置
+```bash
+# 增加設定指定一個內部host指向
+vi docker-compose.yml
+```
+
+<details>
+<summary>docker-compose.yml調整內容</summary>
+<pre><code>
+
+```yml
+### Jenkins ###################################################
+    jenkins:
+      build: ./jenkins
+      environment:
+        JAVA_OPTS: "-Djava.awt.headless=true"
+      ports:
+        - "${JENKINS_HOST_SLAVE_AGENT_PORT}:50000"
+        - "${JENKINS_HOST_HTTP_PORT}:8080"
+      privileged: true
+      volumes:
+        - ${JENKINS_HOME}:/var/jenkins_home
+        - /var/run/docker.sock:/var/run/docker.sock
+      networks:
+        - frontend
+        - backend
++     extra_hosts:
++       - "dockerhost:${DOCKER_HOST_IP}"
+```
+</code></pre>
+</details>
+
+### 丟丟
+```bash
+```
+
+### 丟丟Web
+#### 原始碼管理
+http://122.116.21.111:30000/frontend/throwthrow-web.git
+*/v2
+
+#### 建置環境
+Provide Node & npm bin/ folder to PATH
+
+#### 建置
+執行shell
+```bash
+FOLDER=diudiu_api
+
+rm $FOLDER*
+
+tar cvfz $FOLDER.tgz ./*
+
+cat << EOF > $FOLDER.sh
+
+tar xvfz $FOLDER.tgz -C /data/temp/api/
+
+rsync -r /data/temp/api/ /data/diudiu-api/
+
+chmod -R 775 /data/diudiu-api/storage || exit 0
+
+EOF
+```
+
+```bash
+# 安裝yarn套件
+npm install -g yarn --registry=https://registry.npm.taobao.org
+# 設定.env
+cat << EOF > .env
+DIUDIU_ENV=test
+PROD_URL=https://tsapi.ddiudiu.com/
+PROD_WEB_UEL=https://ts.ddiudiu.com/
+EOF
+# 安裝套件
+yarn install
+# 發布
+yarn build
+# 產生發布檔案
+yarn generate
+
+# dist
+
+FOLDER=diudiu_web
+cd dist
+tar cvfz $FOLDER.tgz ./*
+cd ..
+
+mv dist/$FOLDER.tgz ./
+
+cat << EOF > $FOLDER.sh
+
+tar xvfz $FOLDER.tgz -C /data/diudiu-web/dist/ || exit 1
+
+EOF
+```
+
+#### 建置後動作
+
 
 # 酷奇鐵克用
 ```bash
 # 拉api程式
 git clone http://122.116.21.111:30000/backend/throwthrow-api.git diudiu-api
-sudo chown root:google-sudoers -R diudiu-api/
+# sudo chown root:google-sudoers -R diudiu-api/
+sudo chown cookietag:google-sudoers -R diudiu-api/
 cd diudiu-api
 sudo chmod -R 775 storage
-git checkout origin/develop
+git branch -r
+git checkout -b develop origin/develop
 
 diudiu
 xN5a494uCxtjiEoE
+
+mkdir temp
+cd temp
+mkdir api
+sudo chown cookietag:google-sudoers -R /data/temp
 
 # 進入docker workspace
 docker ps -a
@@ -129,6 +296,7 @@ curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yu
 sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
 sudo yum install yarn
 yarn --version
+# 1.22.18
 
 # 拉web程式
 git clone http://122.116.21.111:30000/frontend/throwthrow-web.git diudiu-web
@@ -136,10 +304,9 @@ sudo chown root:google-sudoers -R diudiu-web/
 cd diudiu-web
 
 git branch -r
-git checkout v2-new-route
-git checkout origin/feature/v2-new-route
-
-git checkout v2 origin/v2
+# git checkout v2-new-route
+# git checkout origin/feature/v2-new-route
+git checkout -b v2 origin/v2
 
 # 設定api網址
 vi nuxt.config.js
@@ -203,6 +370,7 @@ server {
 }
 
 # vue的nginx配置
+# vi ae.diudiu.com.conf
 server {
     listen 80;
     server_name ae.ddiudiu.com;
@@ -258,8 +426,9 @@ history | more
 # ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
 # If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.
 
-# 啟動Docker
+# 從新啟動Docker
 sudo systemctl start docker
+docker-compose up -d nginx redis workspace
 ```
 
 ## **Reference article [參考文章]**

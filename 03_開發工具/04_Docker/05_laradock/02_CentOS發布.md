@@ -105,6 +105,8 @@ docker-compose stop
 docker-compose down
 # 重啟Nginx服務
 docker-compose restart nginx
+# 重啟Redis服務
+docker-compose restart redis
 # 查看Nginx紀錄
 docker-compose logs nginx
 # 查看Nginx即時紀錄
@@ -408,6 +410,15 @@ server {
     error_log /var/log/nginx/ae_diudiu_com_error.log;
     access_log /var/log/nginx/ae_diudiu_com_access.log;
 }
+```
+
+# 機器要連接docker內的mysql
+```bash
+docker ps
+# 0e87995f164f laradock_mysql 0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/
+mysql -u root -h 0.0.0.0 -proot
+mysql -u default -h 0.0.0.0 -psecret
+# laradock內建帳號
 ```
 
 # 測試資料

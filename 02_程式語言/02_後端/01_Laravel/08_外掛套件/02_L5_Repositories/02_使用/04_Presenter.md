@@ -117,6 +117,8 @@ use League\Fractal\Serializer\ArraySerializer;
 
 /**
  * 自訂改寫集合體回傳不要有'data'
+ * 參考檔案vendor/league/fractal/src/Serializer/DataArraySerializer.php
+ * 版本不一樣未有些微差距需要複製出來改寫
  */
 class SimpleArraySerializer extends ArraySerializer
 {

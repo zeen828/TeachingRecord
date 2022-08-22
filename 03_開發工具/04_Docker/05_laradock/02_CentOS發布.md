@@ -255,7 +255,6 @@ EOF
 
 #### 建置後動作
 
-
 # 酷奇鐵克用
 ```bash
 # 拉api程式
@@ -440,6 +439,33 @@ history | more
 # 從新啟動Docker
 sudo systemctl start docker
 docker-compose up -d nginx redis workspace
+```
+
+
+# 測試透過Jenkins機建立新專案（補充資料）
+``` bash
+# 先去Jenkins上建立項目到可以上傳檔案
+
+# 回GCP主機拉git檔案（避免隱藏檔遺落，配置Nginx用）
+git clone https://gitlab.com/cookietag-backend-bank/bank-web.git bank-web
+## 輸入帳號will@cookietag.com
+## 輸入密碼Will1@3qaz
+
+# 切換分支
+git branch
+git branch -r
+git checkout -b dev origin/dev
+
+# 複製.env
+cp .env.example .env
+
+# 調整擁有者
+sudo chown cookietag:google-sudoers -R bank-web/
+sudo chmod -R 775 bank-web/storage
+
+# 到容器workspace裡面去安裝composer套件
+docker-compose exec workspace bash
+composer install
 ```
 
 ## **Reference article [參考文章]**

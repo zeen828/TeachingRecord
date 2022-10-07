@@ -259,6 +259,7 @@ EOF
 ```bash
 # 拉api程式
 git clone http://122.116.21.111:30000/backend/throwthrow-api.git diudiu-api
+git checkout -b dev origin/dev
 # sudo chown root:google-sudoers -R diudiu-api/
 sudo chown cookietag:google-sudoers -R diudiu-api/
 cd diudiu-api

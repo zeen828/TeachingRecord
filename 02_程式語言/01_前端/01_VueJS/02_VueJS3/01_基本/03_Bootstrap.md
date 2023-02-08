@@ -6,16 +6,36 @@
 Bootstrap是一種前端樣式樣板。
 
 ## **Teaching & Examples [教學&範例]**
-### 安装
+### 安装Jquery
+```bash
+npm install --save jquery
 ```
-npm install --save bootstrap
+### main.js中必須要引用
+```js
+// jQuery
+import $ from 'jquery';
+window.$ = $;
 ```
 
-### 引用
+### 安装sass
+```bash
+npm install --save node-sass sass-loader
+```
+
+### 安装Jquery
+```bash
+npm install --save bootstrap
+npm install --save @popperjs/core
+npm install --save bootstrap-icons
+```
+### main.js中引用
 ```js
-// main.js中引入
+// Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/js/bootstrap.js'// 這個會導致js無法運作
 import 'bootstrap'
+// Bootstrap icon
+import 'bootstrap-icons/font/bootstrap-icons.css'
 ```
 
 ### 測試範例
@@ -32,6 +52,7 @@ import 'bootstrap'
 
 ## **Reference article [參考文章]**
 [參考文件](https://stackoverflow.com/questions/65547199/using-bootstrap-5-with-vue-3)
+[Bootstrap icon](https://icons.getbootstrap.com/)
 
 ## **Author [作者]**
 `Mr. Will`

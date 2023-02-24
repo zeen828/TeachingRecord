@@ -58,6 +58,8 @@ sudo yum install git
 git --version
 ```
 
+## ----切換成root---- ##
+
 # 安裝Laradock
 ```bash
 # 從 GitHub 上將 Laradock 下載下來

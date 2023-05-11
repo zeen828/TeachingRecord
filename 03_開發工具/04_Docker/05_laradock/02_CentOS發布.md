@@ -82,6 +82,9 @@ cd ~/Laradock
 sudo systemctl start docker
 docker-compose up -d nginx mysql redis workspace phpmyadmin jenkins
 docker-compose up -d nginx redis workspace
+
+# 重開OS後要先執行
+sudo service docker start
 ```
 
 ## jenkins

@@ -58,6 +58,12 @@ sudo yum install git
 git --version
 ```
 
+# 指令
+```bash
+# linux查目錄容量
+du -sh * 
+```
+
 ## ----切換成root---- ##
 
 # 安裝Laradock
@@ -116,7 +122,7 @@ docker-compose restart redis
 docker-compose logs nginx
 # 查看Nginx即時紀錄
 docker-compose logs -f nginx
-# 進入jenkins容器
+# 進入jenkins容器(工作區/var/jenkins_home/workspace)
 docker-compose exec jenkins bash
 # 進入workspace容器
 docker-compose exec workspace bash

@@ -118,6 +118,10 @@ server {
 }
 ```
 
+```bash
+# 重啟Nginx服務
+docker-compose restart nginx
+```
 ## **Reference article [參考文章]**
 [參考文件](https://www.jianshu.com/p/65b8ec8b4f20)
 

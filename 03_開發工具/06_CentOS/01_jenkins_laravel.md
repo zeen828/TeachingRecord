@@ -41,6 +41,7 @@ composer install
 cp .env.example .env
 # 產生key
 php artisan key:generate
+php artisan migrate
 ```
 
 ### GCP Laradock Nginx設置

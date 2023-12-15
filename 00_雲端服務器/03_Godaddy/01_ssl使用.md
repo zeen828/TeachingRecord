@@ -122,6 +122,42 @@ server {
 # 重啟Nginx服務
 docker-compose restart nginx
 ```
+
+### 定期更新
+
+1. 進入Godaddy管理介面，選擇SSL Certificates，點選域名進入要重新配置的SSL。
+
+2. Download Certificate下載簽章，選折其他(Other)下載檔案。
+
+3. 解壓縮剛剛下載的檔案後會發現有三個檔案。
+```bash
+# 檔案名稱下載亂數生成，
+631721d169c77fb3.crt
+631721d169c77fb3.pem
+gd_bundle-g2-g1.crt
+```
+
+4. 合併下載檔案生成配置用簽章。
+```bash
+cat 631721d169c77fb3.crt gd_bundle-g2-g1.crt >> goddaddy.www.gamibank.com.crt
+```
+
+5. 更新新的憑證
+```bash
+cd /data/Laradock/nginx/ssl
+vi godaddy.ddiudiu.com.20231201.crt
+```
+
+6. 設定Nginx設定替換金鑰
+
+key不用改只改godaddy.ddiudiu.com.20231201.crt
+
+7. 重啟服務
+```bash
+# 重啟Nginx服務
+docker-compose restart nginx
+```
+
 ## **Reference article [參考文章]**
 [參考文件](https://www.jianshu.com/p/65b8ec8b4f20)
 

@@ -64,6 +64,8 @@ server {
 ```bash
 # 建立新服務容器
 docker-compose up -d php-fpm-82
+# 進入php-fpm容器
+docker-compose exec php-fpm-82 bash
 # 重啟Nginx服務
 docker-compose restart nginx
 ```

@@ -140,6 +140,10 @@ Enable
 Disable
 ```
 
+### webhook設定
+關閉對話功能
+Group > Edit > Premissions 切換Send Messages
+Ch
 
 ## **Reference article [參考文章]**
 [參考文件](網址)

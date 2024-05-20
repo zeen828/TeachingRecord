@@ -36,7 +36,7 @@ docker -v
 sudo docker version
 
 # 忘了做啥
-sudo yum install /path/to/package.rpm
+# sudo yum install /path/to/package.rpm
 
 # 測試Docker
 sudo docker run hello-world
@@ -83,27 +83,36 @@ du -sh *
 # 安裝Laradock
 ```bash
 # 從 GitHub 上將 Laradock 下載下來
-git clone https://github.com/Laradock/laradock.git
+git clone https://github.com/Laradock/laradock.git Laradock
 
 # 複製範本 env-example 檔作為設定檔
-cd laradock && cp .env.example .env
+cd Laradock && cp .env.example .env
+
+# 2024-05-13建立加密貨幣專案設定
+PHP_VERSION=8.2
+
+MYSQL_VERSION=8.0
+# 這個port可能被佔用，所以調整成別的
+MYSQL_PORT=33066
 
 # 修改 .env 檔的 APP_CODE_PATH_HOST 參數到指定的映射路徑
-APP_CODE_PATH_HOST=/var/www
+#APP_CODE_PATH_HOST=/var/www
 
-APP_CODE_PATH_HOST:         設定Laravel專案要放在local的哪個path
-APP_CODE_PATH_CONTAINER:    設定專案要同步到container中的哪個path
-DATA_PATH_HOST:             設定db, redis資料要放在哪個path
+#APP_CODE_PATH_HOST:         設定Laravel專案要放在local的哪個path
+#APP_CODE_PATH_CONTAINER:    設定專案要同步到container中的哪個path
+#DATA_PATH_HOST:             設定db, redis資料要放在哪個path
 # DATA_PATH_HOST=/data/.laradock/data
 
 
 # 使用 docker-compose 啟動 Laradock
-cd laradock
+cd Laradock
 sudo systemctl start docker
 docker-compose up -d nginx mysql redis workspace phpmyadmin
 # PS:如果無法正常啟動，上次是遇到docker-compose版本問題安裝到1.23
 # 另外開PHP版本
+docker-compose exec workspace bash
 docker-compose exec workspace-74 bash
+docker-compose exec workspace-82 bash
 
 # 重開OS後要先執行
 sudo service docker start

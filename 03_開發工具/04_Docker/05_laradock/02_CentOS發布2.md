@@ -108,6 +108,7 @@ MYSQL_PORT=33066
 cd Laradock
 sudo systemctl start docker
 docker-compose up -d nginx mysql redis workspace phpmyadmin
+docker-compose up -d nginx mysql redis workspace phpmyadmin redis-webui swagger-ui swagger-editor mosquitto
 # PS:如果無法正常啟動，上次是遇到docker-compose版本問題安裝到1.23
 # 另外開PHP版本
 docker-compose exec workspace bash

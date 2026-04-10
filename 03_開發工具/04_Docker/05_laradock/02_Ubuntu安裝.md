@@ -192,7 +192,10 @@ php artisan migrate
 
 # 後台 Filament 5.X
 composer require filament/filament:"^5.0"
+# 設定後台面板
 php artisan filament:install --panels
+# 設定額外後台面板
+php artisan make:filament-panel customer
 # 後台建立 User
 php artisan make:filament-user
 # 發布設定檔
@@ -205,8 +208,98 @@ php artisan vendor:publish --tag=filament-support-translations
 # 設定 .env
 APP_LOCALE=zh_TW
 
-# 未確認權限管理部份
+
+# 建立使用者模組
+php artisan make:filament-resource User
+# 編輯多語系目錄
+vi app/Filament/Resources/Users/UserResource.php
+	...
+	// 1. 側邊欄顯示名稱
+    public static function getNavigationLabel(): string
+    {
+        return __('menu.customer');
+    }
+
+    // 2. 麵包屑與頁面標題 (單數)
+    public static function getModelLabel(): string
+    {
+        return __('menu.customer');
+    }
+
+    // 3. 側邊欄群組名稱 (選單分組)
+    public static function getNavigationGroup(): ?string
+    {
+        return __('menu.group_system');
+    }
+
+# 密碼調整
+vi app/Filament/Resources/Users/Schemas/UserForm.php
+use Filament\Pages\Page;
+use Filament\Resources\Pages\CreateRecord;
+	....
+                TextInput::make('password')
+                    ->password()
+                    ->revealable() // 允許使用者點擊眼睛圖示查看密碼 (選配，好用)
+                    // ->required()
+                    // 重點 1：只有在「建立」頁面時才必填
+                    ->required(fn (Page $livewire) => $livewire instanceof CreateRecord)
+                    // 重點 2：脫水處理 (Dehydrate) - 如果欄位沒填寫，就不把這個欄位送進資料庫更新
+                    ->dehydrated(fn ($state) => filled($state))
+                    // ->label('密碼'),
+					->label(__('fields.password')), // 使用 label() 進行翻譯
+
+
+#建立一個後台項目
+php artisan make:filament-resource Customer
+
+[參考文件](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
+# 安裝權限管理套件
 composer require spatie/laravel-permission
+# 配置設定檔跟遷移檔
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+# 設定團隊模式
+vi config/permission.php
+'teams' => true,
+# 清除設定緩存
+php artisan optimize:clear
+# 遷移
+php artisan migrate
+# 添加User Model權限套件
+vi app/Models/User.php
+use Spatie\Permission\Traits\HasRoles;
+
+	...
+	// The User model requires this trait
+	use HasRoles;
+
+
+# 建立Seeder
+php artisan make:seeder CreateRole
+# 編輯內容
+vi database/seeders/CreateRole.php
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+	...
+	Role::create(['name' => 'writer']);
+	Permission::create(['name' => 'edit articles']);
+# 執行Seeder
+php artisan db:seed --class=CreateRole
+# 查詢目前設定
+php artisan permission:show
+
+
+[參考文件](https://filamentphp.com/plugins/tharinda-rodrigo-spatie-roles-permissions)
+# 安裝權限管理對應UI
+composer require althinect/filament-spatie-roles-permissions
+# 配置設定檔跟遷移檔(上面執行過的話次次會SKIPPED)
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+# 配置UI設定顯示目錄
+vi app/Providers/Filament/AdminPanelProvider.php
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+
+$panel
+    ...
+    ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
 ```
 
 
@@ -231,3 +324,20 @@ git checkout -b test-admin-laravel-8
 # 回覆提交後程序
 git reset --hard
 ```
+
+https://filamentphp.com/plugins/hexters-hexa
+
+
+參考
+https://ithelp.ithome.com.tw/articles/10337981
+
+https://learnku.com/docs/laravel-modules/9/spatie-laravel-permission/14313
+
+veryenjoy.tw/enjoy/article/325
+
+https://ithelp.ithome.com.tw/m/articles/10379639
+
+https://learnku.com/articles/15321/the-use-of-laravel-permission-a-permission-management-extension-package
+
+https://www.returnc.com/detail/3729
+

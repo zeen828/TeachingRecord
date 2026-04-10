@@ -107,7 +107,7 @@ vi .env
 php artisan migrate
 
 # 後台 Filament 2.X
-composer require filament/filament:"^2.0"
+composer require filament/filament:"^2.0"ㄎ../10    
 # 建立帳號
 php artisan make:filament-user
 # 配置設定檔
@@ -121,6 +121,26 @@ php artisan vendor:publish --tag=filament-support-translations
 'locale' => env('APP_LOCALE', 'en'),
 # 設定 .env
 APP_LOCALE=zh_TW
+
+# 安裝Filament Shield (權限與角色管理)套件
+composer require bezhansalleh/filament-shield:"^2.0"
+# 修改app/Models/User.php
+```php
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable {
+    use HasRoles;
+    // ...
+}
+```
+# 執行安裝指令
+php artisan shield:install
+# 給自己權限
+php artisan shield:super-admincd .
+# 生成所有 Resource 的權限
+php artisan shield:generate --all
+
+
 # 安裝基本套件
 composer require filament/forms
 composer require filament/tables

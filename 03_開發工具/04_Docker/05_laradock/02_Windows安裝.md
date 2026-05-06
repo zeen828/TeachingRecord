@@ -270,6 +270,9 @@ DB_USERNAME=default
 DB_PASSWORD=secret
 ```
 
+### 套件
+[Laravel Analytics](https://github.com/bezhanSalleh/laravel-analytics)
+
 </details>
 <div style="margin-bottom: 20px;"></div>
 
@@ -279,6 +282,9 @@ DB_PASSWORD=secret
 
 ### Filament 常用操作指令
 ```bash
+# 建立Panel(名稱撮要一起清掉bootstrap/providers.php宣告)
+php artisan filament:panel App
+
 # 生成後台Resource功能
 # --generate 自動針對資料庫產生欄位
 php artisan make:filament-resource User --generate
@@ -286,8 +292,11 @@ php artisan make:filament-resource User --generate
 php artisan make:filament-resource User --soft-deletes
 # --view 查看頁面
 php artisan make:filament-resource User --view
+# --simple 簡易模式(彈窗)
+php artisan make:filament-resource User --simple
 # 可同時多個設定使用
 php artisan make:filament-resource User --generate --view
+php artisan make:filament-resource User --generate --view --simple
 php artisan make:filament-resource User --generate --soft-deletes --view
 ```
 
@@ -353,8 +362,9 @@ APP_LOCALE=zh_TW
 ```bash
 # 後台 Filament 5.X
 composer require filament/filament:"^5.0"
+# 安裝(會問二個問題，後台路徑、GitHub Like)
 php artisan filament:install --panels
-# 後台建立 User
+# 後台建立 User(會問三個問題，名稱、信箱、密碼)
 php artisan make:filament-user
 # 發布設定檔
 php artisan vendor:publish --tag=filament-config
@@ -371,6 +381,7 @@ APP_LOCALE=zh_TW
 
 ### 權限管理套件-1
 [Filament Shield](https://github.com/bezhanSalleh/filament-shield)
+[Filament Shield](https://filamentphp.com/plugins/bezhansalleh-shield)
 ```bash
 # 安裝Filament Shield (權限與角色管理)套件
 composer require bezhansalleh/filament-shield
@@ -386,16 +397,60 @@ class User extends Authenticatable
 }
 # 執行安裝指令
 php artisan shield:setup
+# 會詢問以下幾個問題
+1.Do you want to configure Shield for multi-tenancy? / (No)多租戶設定
+2.Would you like to run 'shield:install'? / (Yes)套件安裝
+3.Which Panel would you like to install Shield for? / (admin)
+4.Would you like to run 'shield:generate' for 'admin' Panel? / (Yes)
+5.Would you like to select what to generate (permissions, policies or both) ? / (Yes)
+6.What do you want to generate? / (Policies & Permissions)生成權限與政策
+7.Would you like to run 'shield:super-admin' for 'admin' Panel? / (Yes)設定超級管理員
+8.Would you like to show some love by starring the repo? / (Yes)
+
 # 給自己權限
 php artisan shield:super-admincd .
 # 生成所有 Resource 的權限
 php artisan shield:generate --all
+# 只生成特定資源的權限
+php artisan shield:generate --resource=UserResource
 ```
 
 ### 權限管理套件-2
 [參考文件](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
 ### 權限管理套件-2(對應UI)
 [參考文件](https://filamentphp.com/plugins/tharinda-rodrigo-spatie-roles-permissions)
+
+### 多國語系切換
+[Language Switch](https://github.com/bezhanSalleh/filament-language-switch)
+```bash
+# 安裝
+composer require bezhansalleh/filament-language-switch
+# 設定 /app/Providers/AppServiceProvider.php
+use BezhanSalleh\LanguageSwitch\LanguageSwitch;
+
+public function boot(): void
+{
+    LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+        $switch->locales(['zh_TW', 'en']);
+    });
+}
+```
+
+### 切換面板
+[Panel Switch](https://github.com/bezhanSalleh/filament-panel-switch)
+```bash
+# 安裝
+composer require bezhansalleh/filament-panel-switch
+# 需要先定義出新的Panel
+# 設定 /app/Providers/AppServiceProvider.php
+PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+    $panelSwitch->panels([
+        'admin',
+        'dev',
+        'app'
+    ]);
+});
+```
 
 
 # 安裝基本套件
@@ -409,6 +464,7 @@ composer require filament/notifications
 [輸入框帶計算機](https://filamentphp.com/plugins/ariefng-calculator-plugin)
 [輸入框多多國語細選項](https://filamentphp.com/plugins/ahmed-d-ali-countries)
 [多媒體庫](https://filamentphp.com/plugins/mohamed-slimani-media-manager)
+[目錄改至上排TOP目錄](jeffersongoncalves/filament-topbar)
 
 </details>
 <div style="margin-bottom: 20px;"></div>

@@ -229,10 +229,19 @@ php artisan migrate
 ```bash
 # 進入容器 workspace 建立專案(支援filament 5.2)
 composer create-project --prefer-dist laravel/laravel 12_laravel 12.*
+# 安裝laravel 12，不要自動執行預設腳本
+composer create-project --prefer-dist laravel/laravel 12_laravel 12.* --no-scripts
+cd 12_laravel
+# 複製.env檔案
+cp .env.example .env
+# 將檔案權限在 workspace 容器設定成laradock
+chown -R laradock:laradock 12_laravel
 cd 12_laravel
 # 進入容器 workspace 調整目錄權限
 chown -R laradock:laradock storage bootstrap/cache
 chmod -R 775 storage bootstrap/cache
+# 產生應用程式金鑰
+php artisan key:generate
 # 設定資料庫
 vi .env
 # 進入容器 workspace 建立資料庫
@@ -248,10 +257,19 @@ php artisan migrate
 ```bash
 # 進入容器 workspace 建立專案(支援filament 5.2)
 composer create-project --prefer-dist laravel/laravel 13_laravel 13.*
+# 安裝laravel 13，不要自動執行預設腳本
+composer create-project --prefer-dist laravel/laravel 13_laravel 13.* --no-scripts
+cd 13_laravel
+# 複製.env檔案
+cp .env.example .env
+# 將檔案權限在 workspace 容器設定成laradock
+chown -R laradock:laradock 13_laravel
 cd 13_laravel
 # 進入容器 workspace 調整目錄權限
 chown -R laradock:laradock storage bootstrap/cache
 chmod -R 775 storage bootstrap/cache
+# 產生應用程式金鑰
+php artisan key:generate
 # 設定資料庫
 vi .env
 # 進入容器 workspace 建立資料庫
@@ -262,6 +280,8 @@ php artisan migrate
 
 #### ENV資料庫設定
 ```md
+APP_LOCALE=zh_TW
+
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
@@ -269,6 +289,177 @@ DB_DATABASE=laravel12
 DB_USERNAME=default
 DB_PASSWORD=secret
 ```
+
+<details>
+    <summary>Laravel 常用操作指令</summary>
+
+### Controller
+```bash
+# 建立乾淨 Controller
+php artisan make:controller UserController
+# 建立只執行一件事的 Controller 其他繼承function會忽略
+php artisan make:controller ProvisionServer --invokable
+# 建立資源控制 Controller ，搭配路由Route::resource('photos', PhotoController::class);自動指向全部操作
+php artisan make:controller PhotoController --resource
+# 同上並自訂 Model
+php artisan make:controller UserAController --model=User --resource
+# 同上增加驗證檢查
+php artisan make:controller UserBController --model=User --resource --requests
+# 只建立 API 用功能面
+php artisan make:controller PhotoController --api
+```
+
+### Model
+```bash
+# 建立 Model
+php artisan make:model Flight
+# 建立 Model(一起建遷移檔案)
+php artisan make:model Flight --migration
+# 建立 Model(一起建工廠類)
+php artisan make:model Flight --factory
+php artisan make:model Flight -f
+# 建立 Model(一起建填充)
+php artisan make:model Flight --seed
+php artisan make:model Flight -s
+# 建立 Model(一起建控制器)
+php artisan make:model Flight --controller
+php artisan make:model Flight -c
+# 建立 Model(一起建CRUD完整控制器)
+php artisan make:model Flight --controller --resource --requests
+php artisan make:model Flight -crR
+# 建立 Model(一起建授權政策)
+php artisan make:model Flight --policy
+# 建立 Model(不確定)
+php artisan make:model Flight -mfsc
+# 建立 Model(一起建model, migration, factory, seeder, policy, controller, form requests)
+php artisan make:model Flight --all
+php artisan make:model Flight -a
+# 建立 Model(關聯用中間表，Model class type不一樣)
+php artisan make:model Member --pivot
+php artisan make:model Member -p
+# 顯示 Model 資訊
+php artisan model:show Flight
+# 定義通用的查詢條件
+php artisan make:scope AncientScope
+# 建立Model事件
+php artisan make:observer UserObserver --model=User
+```
+
+### View
+```bash
+# 建立視圖
+php artisan make:view greeting
+# 建立告警
+php artisan make:component Alert --inline
+# 建立驗證器
+php artisan make:request StorePostRequest
+```
+
+### Route
+```bash
+# 建立 API 路由檔案(12版及簡化專門針對api做了安裝會自動安裝相依套件)
+php artisan install:api
+# 路由清單
+php artisan route:list
+php artisan route:list -v
+php artisan route:list -vv
+php artisan route:list --path=api
+```
+
+### Middleware
+```bash
+# 建立中間健
+php artisan make:middleware EnsureTokenIsValid
+```
+
+### Logs
+```bash
+# 安裝錯誤訊息頁面
+php artisan vendor:publish --tag=laravel-errors
+
+# 監聽LOG?(不確定)
+php artisan pail
+php artisan pail -v
+php artisan pail -vv
+php artisan pail --filter="QueryException"
+php artisan pail --message="User created"
+php artisan pail --level=error
+php artisan pail --user=1
+```
+
+### PHP
+```bash
+# 本機運行PHP
+php artisan tinker
+```
+
+### Command
+```bash
+# 建立排程檔案
+php artisan make:command SendEmails
+```
+
+### Migration
+```bash
+# 建立遷移檔案
+php artisan make:migration create_flights_table
+# Dump資料庫出來存為SQL(似乎要安裝 mysqldump 套件)
+php artisan schema:dump
+php artisan schema:dump --prune
+php artisan schema:dump
+php artisan schema:dump --database=testing --prune
+# 查詢遷移檔案狀態
+php artisan migrate:status
+# 模擬遷移不執行(輸出遷移SQL)
+php artisan migrate --pretend
+# 執行遷移
+php artisan migrate
+# 執行遷移(每個檔案給一個編號)
+php artisan migrate --step
+# 執行遷移(強制執行)
+php artisan migrate --force
+# 遷移回復
+php artisan migrate:rollback
+# 遷移回復(5個編號)
+php artisan migrate:rollback --step=5
+# 遷移回復(指定編號)
+php artisan migrate:rollback --batch=3
+# 模擬遷移回復不執行(輸出遷移SQL)
+php artisan migrate:rollback --pretend
+# 回復所有遷移(資料庫會清空)
+php artisan migrate:reset
+# 回復所有遷移再重新執行遷移(資料庫會清空重建)
+php artisan migrate:refresh
+# 回復所有遷移再重新執行遷移，遷移完自動執行 Seeder
+php artisan migrate:refresh --seed
+# 回復所有遷移再重新執行遷移(指定編號)
+php artisan migrate:refresh --step=5
+# 卸載 Drop 所有資料庫
+php artisan migrate:fresh
+# 卸載 Drop 所有資料庫，再重新執行遷移跟 Seeder
+php artisan migrate:fresh --seed
+# 卸載 Drop 所有資料庫(不確定功能)
+php artisan migrate:fresh --database=admin
+```
+
+### Seeder
+```bash
+# 建立填充檔案
+php artisan make:seeder UserSeeder
+# 執行填充
+php artisan db:seed
+# 執行填充(指定 Class)
+php artisan db:seed --class=UserSeeder
+# 重建資料庫並填充
+php artisan migrate:fresh --seed
+# 重建資料庫並填充(指定 Class)
+php artisan migrate:fresh --seed --seeder=UserSeeder
+# 執行填充(強制執行)
+php artisan db:seed --force
+```
+
+</details>
+
 
 ### 套件
 [Laravel Analytics](https://github.com/bezhanSalleh/laravel-analytics)
@@ -278,33 +469,7 @@ DB_PASSWORD=secret
 
 
 <details>
-    <summary>Filament</summary>
-
-### Filament 常用操作指令
-```bash
-# 建立Panel(名稱撮要一起清掉bootstrap/providers.php宣告)
-php artisan filament:panel App
-
-# 生成後台Resource功能
-# --generate 自動針對資料庫產生欄位
-php artisan make:filament-resource User --generate
-# --soft-deletes 軟刪除，需要增加deleted_at欄位
-php artisan make:filament-resource User --soft-deletes
-# --view 查看頁面
-php artisan make:filament-resource User --view
-# --simple 簡易模式(彈窗)
-php artisan make:filament-resource User --simple
-# 可同時多個設定使用
-php artisan make:filament-resource User --generate --view
-php artisan make:filament-resource User --generate --view --simple
-php artisan make:filament-resource User --generate --soft-deletes --view
-```
-
-### Filament 中的 Resource 設定
-```php
-# 菜單標題
-protected static ?string $recordTitleAttribute = 'name';
-```
+    <summary>Filament 各版本安裝</summary>
 
 <details>
     <summary>Filament 2.x</summary>
@@ -375,6 +540,37 @@ php artisan vendor:publish --tag=tables-translations
 php artisan vendor:publish --tag=filament-support-translations
 # 設定 .env
 APP_LOCALE=zh_TW
+```
+
+</details>
+
+<details>
+    <summary>Filament 常用操作指令</summary>
+
+### Filament 常用操作指令
+```bash
+# 建立Panel(名稱撮要一起清掉bootstrap/providers.php宣告)
+php artisan filament:panel App
+
+# 生成後台Resource功能
+# --generate 自動針對資料庫產生欄位
+php artisan make:filament-resource User --generate
+# --soft-deletes 軟刪除，需要增加deleted_at欄位
+php artisan make:filament-resource User --soft-deletes
+# --view 查看頁面
+php artisan make:filament-resource User --view
+# --simple 簡易模式(彈窗)
+php artisan make:filament-resource User --simple
+# 可同時多個設定使用
+php artisan make:filament-resource User --generate --view
+php artisan make:filament-resource User --generate --view --simple
+php artisan make:filament-resource User --generate --soft-deletes --view
+```
+
+### Filament 中的 Resource 設定
+```php
+# 菜單標題
+protected static ?string $recordTitleAttribute = 'name';
 ```
 
 </details>
@@ -497,3 +693,45 @@ git reset --hard
 ```
 </details>
 <div style="margin-bottom: 20px;"></div>
+
+
+
+<details>
+    <summary>Inertia.js 安裝</summary>
+
+### Inertia.js 前端後台功能
+```bash
+# 安裝套件
+composer require laravel/breeze --dev
+# 安裝
+php artisan breeze:install
+# 問題.1
+ ┌ Which Breeze stack would you like to install?
+ │   ○ Blade with Alpine (使用 Laravel 傳統的 Blade 模板引擎，搭配輕量級的 Alpine.js 來處理簡單的前端互動)
+ │   ○ Livewire (Volt Class API) with Alpine (使用 Livewire（結合 Volt 的 Class API 寫法）來處理動態資料，並搭配 Alpine.js 處理微互動)
+ │   ○ Livewire (Volt Functional API) with Alpine (使用 Livewire（結合 Volt 的 Functional API 寫法）來處理動態資料，並搭配 Alpine.js 處理微互動)
+ │   ○ React with Inertia (前端使用 React，並透過 Inertia.js 連接 Laravel)
+ │ › ● Vue with Inertia (前端使用 Vue.js，並透過 Inertia.js 連接 Laravel)
+ │   ○ API only (僅安裝後端相關的基礎架構（如 Laravel Sanctum 權限驗證設定），完全不包含任何前端畫面與樣板)
+ └──────────────────────────────────────────────────────────────┘
+# 問題.2
+ ┌ Would you like any optional features?
+ │   ◼ Dark mode (深色模式)
+ │   ◼ Inertia SSR (伺服器端渲染，SEO需要)
+ │ › ◼ TypeScript (為前端的 Vue 或 React 導入 TypeScript 的支援)
+ │   ◻ ESLint with Prettier (安裝前端的程式碼品質檢查與格式化工具)
+ └──────────────────────────────────────────────────────────────┘
+# 問題.3
+ ┌ Which testing framework do you prefer? ──────────────────────┐
+ │   ○ Pest                                                     │
+ │ › ● PHPUnit                                                  │
+ └──────────────────────────────────────────────────────────────┘
+# 此動作沒執行到
+npm install && npm run dev
+
+# 將檔案權限在 workspace 容器設定成laradock
+chown -R laradock:laradock 12_laravel
+```
+[參考](https://inertiajs.com/)
+
+</details>

@@ -52,6 +52,8 @@ docker exec -it 59df4c9852a0 bash
 wsl --status
 # 列出所有安裝的linuxx
 wsl -l -v
+# 進入Ubuntu(目錄大概是/home/使用者名稱/www)
+wsl -d Ubuntu
 ```
 
 ### VSCode使用WSL
@@ -280,6 +282,11 @@ php artisan migrate
 
 #### ENV資料庫設定
 ```md
+APP_ENV=local
+APP_ENV=production
+APP_ENV=testing
+APP_ENV=staging
+
 APP_LOCALE=zh_TW
 
 DB_CONNECTION=mysql
@@ -289,6 +296,12 @@ DB_DATABASE=laravel12
 DB_USERNAME=default
 DB_PASSWORD=secret
 ```
+
+APP_ENV 值	用途
+local	本機開發環境
+production	正式環境
+testing	PHPUnit 測試
+staging	測試站／預備正式環境
 
 <details>
     <summary>Laravel 常用操作指令</summary>
@@ -440,6 +453,29 @@ php artisan migrate:fresh
 php artisan migrate:fresh --seed
 # 卸載 Drop 所有資料庫(不確定功能)
 php artisan migrate:fresh --database=admin
+```
+
+```php
+# 新建
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('email')->unique();
+                $table->rememberToken();
+                $table->timestamps();
+
+                $table->comment('使用者');
+            });
+        }
+# 加欄位
+        if (Schema::hasTable('users')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->boolean('is_admin')->default('0')->comment('管理員')->after('remember_token');// after
+                $table->boolean('is_temple')->default('0')->comment('廟與人員')->after('remember_token');
+            });
+        }
+
 ```
 
 ### Seeder

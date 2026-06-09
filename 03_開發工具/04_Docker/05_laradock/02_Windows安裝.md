@@ -478,6 +478,31 @@ php artisan migrate:fresh --database=admin
 
 ```
 
+### DB交易模式-DEMO
+```php
+DB::beginTransaction();
+try {
+    User::create([
+        'name' => '測試1'
+    ]);
+    PointIncome::create([
+        'user_id' => 1,
+        'point' => 100
+    ]);
+    DB::commit();
+} catch (\Exception $e) {
+    DB::rollback();
+    Log::error($e->getMessage());
+}
+```
+
+### DB除錯
+```php
+DB::enableQueryLog();
+$user = User::select('id', 'name')->find(1);
+dd(DB::getQueryLog());
+```
+
 ### Seeder
 ```bash
 # 建立填充檔案

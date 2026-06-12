@@ -758,7 +758,7 @@ composer require filament/notifications
 composer require laravel/reverb
 # 安裝
 php artisan reverb:install
-# 安裝(PASS問答都預設質)
+# 安裝(PASS問答都預設值)
 php artisan reverb:install --no-interaction
 # 運行
 php artisan reverb:start

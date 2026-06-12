@@ -823,7 +823,7 @@ ws://localhost:7272/app/rpxfhb01c7vvng8ccpry
 ### 建立EVENT測試
 ```bash
 # 建立TestMessage事件
-php artisan make:event TestMessage
+php artisan make:event TestChannelMessage
 ```
 ```php
 <?php

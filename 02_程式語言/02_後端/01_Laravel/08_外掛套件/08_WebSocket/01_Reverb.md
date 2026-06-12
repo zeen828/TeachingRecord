@@ -20,6 +20,8 @@ php artisan reverb:install --no-interaction
 php artisan reverb:start
 # 運行(指定PORT)
 php artisan reverb:start --port=7272
+# 清除全部緩存(改ENV時能用)
+php artisan optimize:clear
 ```
 
 ### 參考ENV
